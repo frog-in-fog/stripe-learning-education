@@ -30,6 +30,9 @@ build_back:
 ## start: starts front and back end
 start: start_front start_back
 
+## dev: stops and later starts everything
+dev: stop start
+
 ## start_front: starts the front end
 start_front: build_front
 	@echo Starting the front end...

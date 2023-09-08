@@ -1,6 +1,7 @@
 package main
 
 import (
+	"myapp/internal/models"
 	"net/http"
 )
 
@@ -42,7 +43,19 @@ func (app *application) PaymentSucceeded(w http.ResponseWriter, r *http.Request)
 
 //ChargeOnce displays the page to buy one widget
 func (app *application) ChargeOnce(w http.ResponseWriter, r *http.Request) {
-	if err := app.renderTemplate(w, r, "buy-once", nil, "stripe-js"); err != nil {
+	widget := models.Widget{
+		ID:          1,
+		Name:        "Custom Widget",
+		Description: "A very nice widget",
+		Inventory:   10,
+		Price:       1000,
+	}
+
+	data := make(map[string]any)
+	data["widget"] = widget
+	if err := app.renderTemplate(w, r, "buy-once", &templateData{
+		Data: data,
+	}, "stripe-js"); err != nil {
 		app.errorLog.Println(err)
 	}
 }
